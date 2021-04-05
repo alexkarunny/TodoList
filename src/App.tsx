@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from "./TodoList";
+
 
 export type TaskType = {
     id: number
@@ -8,26 +9,58 @@ export type TaskType = {
     isDone: boolean
 }
 
+export type filterValuesType = "all" | "active" | "completed"
+
 function App() {
 
-    const tasksToLearn: Array<TaskType> =  [
-        {id: 1, title: "HTML", isDone: false},
-        {id: 2, title: "CSS", isDone: true},
+//BLL
+
+    const [tasks, setTasks] = useState<Array<TaskType>>([
+        {id: 1, title: "HTML", isDone: true},
+        {id: 2, title: "CSS", isDone: false},
         {id: 3, title: "React", isDone: true},
-    ]
+        {id: 4, title: "Vue", isDone: false},
+    ])
 
-    const tasksToBuy: Array<TaskType> = [
-        {id: 4, title: "Milk", isDone: false},
-        {id: 5, title: "Sugar", isDone: false},
-        {id: 6, title: "Strawberry", isDone: true},
-    ]
+    const [filter, setFilter] = useState<filterValuesType>("all")
 
 
+    function removeTask(taskID: number) {
+        const filterTasks = tasks.filter(t => t.id !== taskID);
+        setTasks(filterTasks);
+    }
+
+    function changeFilter(value: filterValuesType) {
+        setFilter(value)
+    }
+
+//UI
+
+    function getTasksForTodoList() {
+        switch (filter) {
+            case  "active":
+                return tasks.filter(t => !t.isDone)
+            case  "completed":
+                return tasks.filter(t => t.isDone)
+            default:
+                return tasks
+        }
+        /*let tasksForTodoList = tasks;
+        if (filter === "active") {
+            tasksForTodoList = tasks.filter(t => t.isDone === false)
+        } else if (filter === "completed") {
+            tasksForTodoList = tasks.filter(t => t.isDone === true)
+        }
+        return tasksForTodoList;*/
+    }
 
     return (
         <div className="App">
-            <TodoList title={"What to learn"} tasks={tasksToLearn}/>
-            <TodoList title={"What to buy"} tasks={tasksToBuy}/>
+            <TodoList title={"What to learn"}
+                      tasks={getTasksForTodoList()}
+                      removeTask={removeTask}
+                      changeFilter={changeFilter}
+            />
         </div>
     );
 }
