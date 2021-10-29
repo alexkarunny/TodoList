@@ -1,4 +1,4 @@
-import {filterValuesType, TaskStateType, TodoListType} from "../App";
+import {filterValuesType, TodoListType} from "../App";
 import {v1} from "uuid";
 
 export type RemoveTodoListAT = {
