@@ -4,7 +4,7 @@ import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
 import {TaskType} from "./AppWithRedux";
 
-type PropsType = {
+export type TaskPropsType = {
     task: TaskType
     todoListID: string
     changeTaskStatus: (taskID: string, newIsDoneValue: boolean, todoListID: string) => void
@@ -19,7 +19,7 @@ export const Task = React.memo((
         changeTaskStatus,
         removeTask,
         changeTaskTitle
-    }: PropsType) => {
+    }: TaskPropsType) => {
 
     const onChangeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked, todoListID), [task.id, todoListID, changeTaskStatus])
     const onRemoveTask = useCallback(() => {
