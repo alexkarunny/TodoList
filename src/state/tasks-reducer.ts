@@ -146,12 +146,21 @@ export const fetchTasksAC = (todoId: string, tasks: TaskType[]) => {
         tasks
     } as const
 }
+
 export const fetchTasksTC = (todoId: string) => {
     return (dispatch: Dispatch) => {
         todolistsAPI.getTasks(todoId)
             .then((res) => {
                 const tasks = res.data.items
                 dispatch(fetchTasksAC(todoId, tasks))
+            })
+    }
+}
+export const removeTaskTC = (todoId: string, taskId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.deleteTask(todoId, taskId)
+            .then(() => {
+                dispatch(removeTaskAC(taskId, todoId))
             })
     }
 }

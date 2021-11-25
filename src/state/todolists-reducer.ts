@@ -1,8 +1,6 @@
 import {v1} from 'uuid';
 import {todolistsAPI, TodolistType} from '../api/todolists-api'
 import {Dispatch} from "redux";
-import {AppRootStateType} from "./store";
-import {useEffect} from "react";
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -97,7 +95,7 @@ export const setTodolistsAC = (todos: TodolistType[]) => {
     } as const
 }
 
-export const fetchTodolistsThunk = (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const fetchTodolistsThunkCreator = () => (dispatch: Dispatch) => {
     todolistsAPI.getTodolists()
         .then((res) => {
             dispatch(setTodolistsAC(res.data))
