@@ -159,6 +159,7 @@ export const addTaskTC = (title: string, todoId: string) => (dispatch: Dispatch)
             dispatch(addTaskAC(res.data.data.item))
         })
 }
+
 export const updateTaskStatus = (todoId: string, taskId: string, status: TaskStatuses) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
 
     const state = getState()

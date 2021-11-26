@@ -79,8 +79,8 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
     return {type: 'REMOVE-TODOLIST', id: todolistId}
 }
-export const addTodolistAC = (title: string): AddTodolistActionType => {
-    return {type: 'ADD-TODOLIST', title: title, todolistId: v1()}
+export const addTodolistAC = (title: string, todolistId: string): AddTodolistActionType => {
+    return {type: 'ADD-TODOLIST', title: title, todolistId}
 }
 export const changeTodolistTitleAC = (id: string, title: string): ChangeTodolistTitleActionType => {
     return {type: 'CHANGE-TODOLIST-TITLE', id: id, title: title}
@@ -111,7 +111,8 @@ export const removeTodolistTC = (todoId: string) => (dispatch: Dispatch) => {
 export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
     debugger
     todolistsAPI.createTodolist(title)
-        .then(() => {
-            dispatch(addTodolistAC(title))
+        .then((res) => {
+            debugger
+            dispatch(addTodolistAC(title, res.data.data.item.id))
         })
 }
